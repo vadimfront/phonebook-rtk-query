@@ -3,7 +3,7 @@ import PhoneBookForm from './PhoneBook/PhoneBookForm';
 import PhoneBookList from './PhoneBook/PhoneBookList';
 import PhoneBookFilter from './PhoneBook/PhoneBookFilter/PhoneBookFilter';
 import { Container, Section } from './App.styled';
-import { checkIfUserExists, contactsFilter } from 'utils/phoneBookUtils';
+import { checkIfUserExists } from 'utils/phoneBookUtils';
 
 export default class App extends Component {
   state = {
