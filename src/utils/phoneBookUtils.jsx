@@ -1,7 +1,6 @@
 export const contactsFilter = (data, searchTerm) => {
-  return data.filter(el =>
-    el.name.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const term = searchTerm.toLowerCase();
+  return data.filter(el => el.name.toLowerCase().includes(term));
 };
 
 export const checkIfUserExists = (contacts, newUser) => {

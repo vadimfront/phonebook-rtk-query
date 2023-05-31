@@ -48,7 +48,6 @@ export default class PhoneBookForm extends Component {
               pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
               title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
               onChange={this.handleChange}
-              autocomplete="off"
               required
             />
             <Label htmlFor="phone_book__name">Name</Label>
