@@ -1,14 +1,9 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { Filter, Field } from './PhoneBookFilter.styled';
-import { StyledFormikField, FieldGroup, Label } from '../PhoneBookForm.styled';
+import { FieldGroup, Label } from '../PhoneBookForm.styled';
 
 export default class PhoneBookFilter extends Component {
-  // searchContact = e => {
-  //   const { setFilter } = this.props;
-  //   const { value } = e.currentTarget;
-  //   setFilter(value);
-  // };
-
   render() {
     return (
       <Filter>
@@ -25,3 +20,7 @@ export default class PhoneBookFilter extends Component {
     );
   }
 }
+
+PhoneBookFilter.propTypes = {
+  handeFilter: PropTypes.func,
+};

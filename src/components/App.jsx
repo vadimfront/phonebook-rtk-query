@@ -43,7 +43,7 @@ export default class App extends Component {
       <Section>
         <Container>
           <PhoneBookForm addContact={this.addContact} />
-          <PhoneBookFilter contacts={contacts} handeFilter={this.handeFilter} />
+          <PhoneBookFilter handeFilter={this.handeFilter} />
           <PhoneBookList
             contacts={contacts}
             filter={filter}
