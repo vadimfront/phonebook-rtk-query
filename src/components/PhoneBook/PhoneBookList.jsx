@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { List, ListItem } from './PhoneBookList.styed';
 import { Button } from './PhoneBookForm.styled';
 import { contactsFilter } from 'utils/phoneBookUtils';
@@ -36,3 +37,9 @@ export default class PhoneBookList extends Component {
     return <div>{itemList}</div>;
   }
 }
+
+PhoneBookList.propTypes = {
+  deleteContact: PropTypes.func,
+  contacts: PropTypes.array,
+  filter: PropTypes.string,
+};

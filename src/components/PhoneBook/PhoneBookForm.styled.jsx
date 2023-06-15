@@ -1,6 +1,7 @@
+import { Field, Form } from 'formik';
 import styled from '@emotion/styled';
 
-export const Form = styled.form`
+export const FormBook = styled(Form)`
   max-width: 600px;
   width: 100%;
 `;
@@ -13,7 +14,7 @@ export const FieldGroup = styled.div`
   padding: 20px 0 0;
   margin-bottom: 25px;
 `;
-export const Field = styled.input`
+export const StyledFormikField = styled(Field)`
   width: 100%;
   border: none;
   border-bottom: 2px solid #000;

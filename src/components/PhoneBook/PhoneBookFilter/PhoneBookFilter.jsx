@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { Filter } from './PhoneBookFilter.styled';
-import { Field, FieldGroup, Label } from '../PhoneBookForm.styled';
+import { Filter, Field } from './PhoneBookFilter.styled';
+import { StyledFormikField, FieldGroup, Label } from '../PhoneBookForm.styled';
 
 export default class PhoneBookFilter extends Component {
   // searchContact = e => {
