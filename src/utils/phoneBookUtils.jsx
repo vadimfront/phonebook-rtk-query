@@ -1,14 +1,19 @@
-export const contactsFilter = (data, searchTerm) => {
+export const contactsFilter = (contacts, searchTerm) => {
   const term = searchTerm.toLowerCase();
-  return data.filter(el => el.name.toLowerCase().includes(term));
+
+  if (!contacts.length) return contacts;
+
+  const filtered = contacts.filter(contact =>
+    contact.name.toLowerCase().includes(term)
+  );
+
+  return filtered.length ? filtered : [];
 };
 
 export const checkIfUserExists = (contacts, newUser) => {
-  const userName = newUser.name;
-  const filtered = contactsFilter(contacts, userName);
-  if (filtered.length) {
-    alert(`${userName} is already in contacts.`);
-    return true;
-  }
-  return false;
+  if (!contacts.length) return false;
+  const isUserExist = contacts.some(
+    ({ name }) => name.toLowerCase() === newUser.name.toLowerCase()
+  );
+  return isUserExist;
 };

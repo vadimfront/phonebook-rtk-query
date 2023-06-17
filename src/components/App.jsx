@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import PhoneBookForm from './PhoneBook/PhoneBookForm';
-import PhoneBookList from './PhoneBook/PhoneBookList';
-import PhoneBookFilter from './PhoneBook/PhoneBookFilter/PhoneBookFilter';
+import PhoneBookForm from './PhoneBookForm/PhoneBookForm';
+import PhoneBookList from './PhoneBookList/PhoneBookList';
+import PhoneBookFilter from './PhoneBookFilter/PhoneBookFilter';
 import { Container, Section } from './App.styled';
-import { checkIfUserExists } from 'utils/phoneBookUtils';
+import { checkIfUserExists, contactsFilter } from 'utils/phoneBookUtils';
 
 export default class App extends Component {
   state = {
@@ -13,9 +13,12 @@ export default class App extends Component {
 
   addContact = newContact => {
     const { contacts } = this.state;
-    const checkResult = checkIfUserExists(contacts, newContact);
-    if (checkResult) return;
 
+    const checkResult = checkIfUserExists(contacts, newContact);
+    if (checkResult) {
+      alert(`${newContact.name} is already in contacts.`);
+      return;
+    }
     this.setState(prevState => ({
       contacts: [...prevState.contacts, newContact],
     }));
@@ -23,6 +26,7 @@ export default class App extends Component {
 
   handeFilter = e => {
     const { value } = e.currentTarget;
+    console.log(value);
 
     this.setState({
       filter: value,
@@ -30,25 +34,27 @@ export default class App extends Component {
   };
 
   deleteContact = id => {
-    const { contacts } = this.state;
-    const newContacts = contacts.filter(contact => contact.id !== id);
-    this.setState({
-      contacts: newContacts,
-    });
+    this.setState(prevState => ({
+      contacts: prevState.contacts.filter(contact => contact.id !== id),
+    }));
   };
 
   render() {
     const { contacts, filter } = this.state;
+    const filtered = contactsFilter(contacts, filter);
+
     return (
       <Section>
         <Container>
           <PhoneBookForm addContact={this.addContact} />
-          <PhoneBookFilter handeFilter={this.handeFilter} />
-          <PhoneBookList
-            contacts={contacts}
-            filter={filter}
-            deleteContact={this.deleteContact}
-          />
+          <PhoneBookFilter handleFilter={this.handeFilter} />
+          {filtered.length ? (
+            <PhoneBookList
+              contacts={filtered}
+              deleteContact={this.deleteContact}
+            />
+          ) : null}
+          {!filtered.length && contacts.length ? 'There are no matches!' : null}
         </Container>
       </Section>
     );
