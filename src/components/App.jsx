@@ -26,7 +26,6 @@ export default class App extends Component {
 
   handeFilter = e => {
     const { value } = e.currentTarget;
-    console.log(value);
 
     this.setState({
       filter: value,
