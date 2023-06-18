@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import PhoneBookForm from './PhoneBookForm/PhoneBookForm';
-import PhoneBookList from './PhoneBookList/PhoneBookList';
-import PhoneBookFilter from './PhoneBookFilter/PhoneBookFilter';
 import { Container, Section } from './App.styled';
 import { checkIfUserExists, contactsFilter } from 'utils/phoneBookUtils';
+import { PhoneBookFilter } from './PhoneBookFilter/PhoneBookFilter';
+import { PhoneBookList } from './PhoneBookList/PhoneBookList';
 
 export default class App extends Component {
   state = {

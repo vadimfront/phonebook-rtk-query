@@ -1,8 +1,9 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Button } from 'components/PhoneBookForm/PhoneBookForm.styled';
 import { ListItem } from './PhoneBookListItem.styled';
 
-export default function PhoneBookListItem({ contacts, deleteContact }) {
+export const PhoneBookListItem = ({ contacts, deleteContact }) => {
   const contactList = contacts.map(contact => {
     const { name, number, id } = contact;
     return (
@@ -15,4 +16,9 @@ export default function PhoneBookListItem({ contacts, deleteContact }) {
     );
   });
   return contactList;
-}
+};
+
+PhoneBookListItem.propTypes = {
+  contacts: PropTypes.array,
+  deleteContact: PropTypes.func,
+};

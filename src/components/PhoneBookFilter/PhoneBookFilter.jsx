@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Filter, Field } from './PhoneBookFilter.styled';
 import { FieldGroup, Label } from '../PhoneBookForm/PhoneBookForm.styled';
 
-export default function PhoneBookFilter({ handleFilter }) {
+export const PhoneBookFilter = ({ handleFilter }) => {
   return (
     <Filter>
       <FieldGroup>
@@ -17,7 +17,7 @@ export default function PhoneBookFilter({ handleFilter }) {
       </FieldGroup>
     </Filter>
   );
-}
+};
 
 PhoneBookFilter.propTypes = {
   handleFilter: PropTypes.func,
