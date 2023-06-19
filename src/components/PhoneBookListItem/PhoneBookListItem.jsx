@@ -3,22 +3,21 @@ import PropTypes from 'prop-types';
 import { Button } from 'components/PhoneBookForm/PhoneBookForm.styled';
 import { ListItem } from './PhoneBookListItem.styled';
 
-export const PhoneBookListItem = ({ contacts, deleteContact }) => {
-  const contactList = contacts.map(contact => {
-    const { name, number, id } = contact;
-    return (
-      <ListItem key={id}>
-        {name}: {number}
-        <Button size="small" onClick={() => deleteContact(id)}>
-          Delete
-        </Button>
-      </ListItem>
-    );
-  });
-  return contactList;
+export const PhoneBookListItem = ({ itemId, name, number, deleteContact }) => {
+  console.log(itemId);
+  return (
+    <ListItem key={itemId}>
+      {name}: {number}
+      <Button size="small" onClick={() => deleteContact(itemId)}>
+        Delete
+      </Button>
+    </ListItem>
+  );
 };
 
 PhoneBookListItem.propTypes = {
-  contacts: PropTypes.array,
+  itemId: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  number: PropTypes.string.isRequired,
   deleteContact: PropTypes.func,
 };

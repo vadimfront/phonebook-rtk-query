@@ -6,7 +6,15 @@ import { PhoneBookListItem } from 'components/PhoneBookListItem/PhoneBookListIte
 export const PhoneBookList = ({ contacts, deleteContact }) => {
   return (
     <List>
-      <PhoneBookListItem contacts={contacts} deleteContact={deleteContact} />
+      {contacts.map(({ name, number, id }) => (
+        <PhoneBookListItem
+          key={id}
+          itemId={id}
+          name={name}
+          number={number}
+          deleteContact={deleteContact}
+        />
+      ))}
     </List>
   );
 };
