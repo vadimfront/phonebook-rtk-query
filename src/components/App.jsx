@@ -4,12 +4,29 @@ import { Container, Section } from './App.styled';
 import { checkIfUserExists, contactsFilter } from 'utils/phoneBookUtils';
 import { PhoneBookFilter } from './PhoneBookFilter/PhoneBookFilter';
 import { PhoneBookList } from './PhoneBookList/PhoneBookList';
+import { loadFromLocalStorage, saveToLocalStorage } from 'utils/helpers';
 
 export default class App extends Component {
   state = {
     contacts: [],
     filter: '',
   };
+
+  componentDidMount() {
+    const savedContacts = loadFromLocalStorage('phoneBookContacts');
+    if (savedContacts !== undefined) {
+      this.setState({
+        contacts: savedContacts,
+      });
+    }
+  }
+
+  componentDidUpdate(_, prevState) {
+    const { contacts } = this.state;
+    if (prevState.contact !== contacts) {
+      saveToLocalStorage('phoneBookContacts', contacts);
+    }
+  }
 
   addContact = newContact => {
     const { contacts } = this.state;
