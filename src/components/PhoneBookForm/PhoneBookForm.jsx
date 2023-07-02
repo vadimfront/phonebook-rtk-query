@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { ErrorMessage, Formik } from 'formik';
 import * as Yup from 'yup';
@@ -12,13 +12,13 @@ import {
 import { nanoid } from 'nanoid';
 import { nameRegExp, phoneRegExp } from 'components/constants';
 
-export default class PhoneBookForm extends Component {
-  initialValues = {
+const PhoneBookForm = ({ addContact }) => {
+  const initialValues = {
     name: '',
     number: '',
   };
 
-  validationSchema = Yup.object().shape({
+  const validationSchema = Yup.object().shape({
     name: Yup.string()
       .matches(nameRegExp, 'Invalid name')
       .required('Name is required'),
@@ -27,8 +27,7 @@ export default class PhoneBookForm extends Component {
       .required('Phone number is required'),
   });
 
-  handleSubmit = (values, { resetForm }) => {
-    const { addContact } = this.props;
+  const handleSubmit = (values, { resetForm }) => {
     const id = nanoid();
 
     const newContact = {
@@ -38,46 +37,46 @@ export default class PhoneBookForm extends Component {
 
     addContact(newContact);
 
-    resetForm({ values: this.initialValues });
+    resetForm({ values: initialValues });
   };
 
-  render() {
-    return (
-      <Formik
-        initialValues={this.initialValues}
-        validationSchema={this.validationSchema}
-        onSubmit={this.handleSubmit}
-      >
-        <FormBook>
-          <FieldGroup>
-            <StyledFormikField
-              type="text"
-              id="phone_book__name"
-              name="name"
-              placeholder="Name"
-              title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
-            />
-            <ErrorMessage name="name" component="div" />
-            <Label htmlFor="phone_book__name">Name</Label>
-          </FieldGroup>
-          <FieldGroup>
-            <StyledFormikField
-              type="tel"
-              id="phone_book__number"
-              name="number"
-              placeholder="Number"
-              title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
-            />
-            <ErrorMessage name="number" component="div" />
+  return (
+    <Formik
+      initialValues={initialValues}
+      validationSchema={validationSchema}
+      onSubmit={handleSubmit}
+    >
+      <FormBook>
+        <FieldGroup>
+          <StyledFormikField
+            type="text"
+            id="phone_book__name"
+            name="name"
+            placeholder="Name"
+            title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
+          />
+          <ErrorMessage name="name" component="div" />
+          <Label htmlFor="phone_book__name">Name</Label>
+        </FieldGroup>
+        <FieldGroup>
+          <StyledFormikField
+            type="tel"
+            id="phone_book__number"
+            name="number"
+            placeholder="Number"
+            title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
+          />
+          <ErrorMessage name="number" component="div" />
 
-            <Label htmlFor="phone_book__number">Number</Label>
-          </FieldGroup>
-          <Button type="submit">Add contact</Button>
-        </FormBook>
-      </Formik>
-    );
-  }
-}
+          <Label htmlFor="phone_book__number">Number</Label>
+        </FieldGroup>
+        <Button type="submit">Add contact</Button>
+      </FormBook>
+    </Formik>
+  );
+};
+
+export default PhoneBookForm;
 
 PhoneBookForm.propTypes = {
   addContact: PropTypes.func,

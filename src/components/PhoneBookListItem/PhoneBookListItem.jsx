@@ -4,7 +4,6 @@ import { Button } from 'components/PhoneBookForm/PhoneBookForm.styled';
 import { ListItem } from './PhoneBookListItem.styled';
 
 export const PhoneBookListItem = ({ itemId, name, number, deleteContact }) => {
-  console.log(itemId);
   return (
     <ListItem key={itemId}>
       {name}: {number}
