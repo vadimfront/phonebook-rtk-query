@@ -10,10 +10,10 @@ export const contactsFilter = (contacts, searchTerm) => {
   return filtered.length ? filtered : [];
 };
 
-export const checkIfUserExists = (contacts, newUser) => {
+export const checkIfContactExists = (contacts, contactName) => {
   if (!contacts.length) return false;
-  const isUserExist = contacts.some(
-    ({ name }) => name.toLowerCase() === newUser.name.toLowerCase()
+  const isContactExist = contacts.some(
+    ({ name }) => name.toLowerCase() === contactName.toLowerCase()
   );
-  return isUserExist;
+  return isContactExist;
 };

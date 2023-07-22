@@ -9,10 +9,16 @@ import {
   FormBook,
   Label,
 } from './PhoneBookForm.styled';
-import { nanoid } from 'nanoid';
 import { nameRegExp, phoneRegExp } from 'components/constants';
+import { useDispatch, useSelector } from 'react-redux';
+import { checkIfContactExists } from 'utils/phoneBookUtils';
+import { getContacts } from 'reducer/selectors';
+import { addContact } from 'reducer/contactsSlice';
 
-const PhoneBookForm = ({ addContact }) => {
+const PhoneBookForm = () => {
+  const contacts = useSelector(getContacts);
+  const dispatch = useDispatch();
+
   const initialValues = {
     name: '',
     number: '',
@@ -27,16 +33,14 @@ const PhoneBookForm = ({ addContact }) => {
       .required('Phone number is required'),
   });
 
-  const handleSubmit = (values, { resetForm }) => {
-    const id = nanoid();
-
-    const newContact = {
-      id: id,
-      ...values,
-    };
-
-    addContact(newContact);
-
+  const handleSubmit = ({ name, number }, { resetForm }) => {
+    console.log(name, contacts);
+    const checkResult = checkIfContactExists(contacts, name);
+    if (checkResult) {
+      alert(`${name} is already in contacts.`);
+      return;
+    }
+    dispatch(addContact({ name, number }));
     resetForm({ values: initialValues });
   };
 
@@ -78,6 +82,6 @@ const PhoneBookForm = ({ addContact }) => {
 
 export default PhoneBookForm;
 
-PhoneBookForm.propTypes = {
-  addContact: PropTypes.func,
-};
+// PhoneBookForm.propTypes = {
+//   addContact: PropTypes.func,
+// };
