@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { List, ListItem } from './PhoneBookList.styed';
 import { useDispatch, useSelector } from 'react-redux';
 import { getContacts, getFilterContactsTerm } from 'reducer/selectors';
@@ -31,9 +30,4 @@ export const PhoneBookList = () => {
       {!filteredContacts.length && contacts.length > 0 && 'There is no matches'}
     </>
   );
-};
-
-PhoneBookList.propTypes = {
-  contacts: PropTypes.array,
-  deleteContact: PropTypes.func,
 };

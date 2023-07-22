@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { ErrorMessage, Formik } from 'formik';
 import * as Yup from 'yup';
 import {
@@ -81,7 +80,3 @@ const PhoneBookForm = () => {
 };
 
 export default PhoneBookForm;
-
-// PhoneBookForm.propTypes = {
-//   addContact: PropTypes.func,
-// };

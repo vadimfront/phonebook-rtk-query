@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Filter, Field } from './PhoneBookFilter.styled';
 import { FieldGroup, Label } from '../PhoneBookForm/PhoneBookForm.styled';
 import { useDispatch } from 'react-redux';
@@ -26,8 +25,4 @@ export const PhoneBookFilter = () => {
       </FieldGroup>
     </Filter>
   );
-};
-
-PhoneBookFilter.propTypes = {
-  handleFilter: PropTypes.func,
 };
