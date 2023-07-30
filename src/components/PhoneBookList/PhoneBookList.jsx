@@ -5,8 +5,8 @@ import {
   ContactNumber,
   List,
   ListItem,
+  NotFound,
 } from './PhoneBookList.styed';
-import { Button } from 'components/PhoneBookForm/PhoneBookForm.styled';
 import { contactsFilter } from 'utils/phoneBookUtils';
 import {
   useDeleteContactMutation,
@@ -42,7 +42,7 @@ export const PhoneBookList = () => {
       {isError && error.message}
       {contentExist && (
         <List>
-          {contacts.map(({ contactName, phoneNamber, id }) => (
+          {filteredContacts.map(({ contactName, phoneNamber, id }) => (
             <ListItem key={id}>
               <ContactName>{contactName}</ContactName>
               <ContactNumber>{phoneNamber}</ContactNumber>
@@ -53,7 +53,7 @@ export const PhoneBookList = () => {
           ))}
         </List>
       )}
-      {noFilterResults && 'There is no matches'}
+      {noFilterResults && <NotFound>There is no matches</NotFound>}
     </>
   );
 };
