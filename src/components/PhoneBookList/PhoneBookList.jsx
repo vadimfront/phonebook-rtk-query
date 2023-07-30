@@ -1,33 +1,59 @@
 import React from 'react';
-import { List, ListItem } from './PhoneBookList.styed';
-import { useDispatch, useSelector } from 'react-redux';
-import { getContacts, getFilterContactsTerm } from 'reducer/selectors';
+import {
+  BtnDelete,
+  ContactName,
+  ContactNumber,
+  List,
+  ListItem,
+} from './PhoneBookList.styed';
 import { Button } from 'components/PhoneBookForm/PhoneBookForm.styled';
 import { contactsFilter } from 'utils/phoneBookUtils';
-import { deleteContact } from 'reducer/contactsSlice';
+import {
+  useDeleteContactMutation,
+  useGetContactsQuery,
+} from 'reducer/phoneBookApi';
+import { getFilterContactsTerm } from 'reducer/selectors';
+import { useSelector } from 'react-redux';
+import { ReactComponent as IconDelete } from '../../assets/svg/iconDelete.svg';
+import Spinner from 'components/Spinner/Spinner';
 
 export const PhoneBookList = () => {
-  const contacts = useSelector(getContacts);
-  const filterContactsTerm = useSelector(getFilterContactsTerm);
-  const dispatch = useDispatch();
-  const handleDelete = id => dispatch(deleteContact(id));
-  const filteredContacts = contactsFilter(contacts, filterContactsTerm);
+  const {
+    data: contacts,
+    isLoading,
+    isFetching,
+    isError,
+    error,
+  } = useGetContactsQuery();
+  const [deleteContacts] = useDeleteContactMutation();
+
+  const filterTerm = useSelector(getFilterContactsTerm);
+  const filteredContacts = contacts && contactsFilter(contacts, filterTerm);
+
+  const contentExist = !(isLoading ?? isError) && filteredContacts.length > 0;
+  const noFilterResults =
+    !(isLoading ?? isError) &&
+    contacts.length > 0 &&
+    !filteredContacts.length > 0;
 
   return (
     <>
-      {filteredContacts.length > 0 && (
+      {isFetching && <Spinner />}
+      {isError && error.message}
+      {contentExist && (
         <List>
-          {filteredContacts.map(({ name, number, id }) => (
+          {contacts.map(({ contactName, phoneNamber, id }) => (
             <ListItem key={id}>
-              {name}: {number}
-              <Button size="small" onClick={() => handleDelete(id)}>
-                Delete
-              </Button>
+              <ContactName>{contactName}</ContactName>
+              <ContactNumber>{phoneNamber}</ContactNumber>
+              <BtnDelete size="small" onClick={() => deleteContacts(id)}>
+                <IconDelete />
+              </BtnDelete>
             </ListItem>
           ))}
         </List>
       )}
-      {!filteredContacts.length && contacts.length > 0 && 'There is no matches'}
+      {noFilterResults && 'There is no matches'}
     </>
   );
 };

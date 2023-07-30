@@ -1,7 +1,8 @@
 export const contactsFilter = (contacts, searchTerm) => {
-  const term = searchTerm.toLowerCase();
+  console.log(contacts);
+  const term = searchTerm.trim().toLowerCase();
 
-  if (!contacts.length) return contacts;
+  if (!contacts.length || !term.length) return contacts;
 
   const filtered = contacts.filter(contact =>
     contact.name.toLowerCase().includes(term)
@@ -10,10 +11,12 @@ export const contactsFilter = (contacts, searchTerm) => {
   return filtered.length ? filtered : [];
 };
 
-export const checkIfContactExists = (contacts, contactName) => {
+export const checkIfContactExists = (contacts, contactFilterByName) => {
   if (!contacts.length) return false;
   const isContactExist = contacts.some(
-    ({ name }) => name.toLowerCase() === contactName.toLowerCase()
+    ({ contactName }) =>
+      contactName.toLowerCase() === contactFilterByName.toLowerCase()
   );
+  console.log(isContactExist);
   return isContactExist;
 };

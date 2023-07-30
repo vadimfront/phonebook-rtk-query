@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { ErrorMessage, Formik } from 'formik';
 import * as Yup from 'yup';
 import {
@@ -9,37 +9,45 @@ import {
   Label,
 } from './PhoneBookForm.styled';
 import { nameRegExp, phoneRegExp } from 'components/constants';
-import { useDispatch, useSelector } from 'react-redux';
 import { checkIfContactExists } from 'utils/phoneBookUtils';
-import { getContacts } from 'reducer/selectors';
-import { addContact } from 'reducer/contactsSlice';
+import {
+  useAddContactMutation,
+  useGetContactsQuery,
+} from 'reducer/phoneBookApi';
+import { nanoid } from 'nanoid';
 
 const PhoneBookForm = () => {
-  const contacts = useSelector(getContacts);
-  const dispatch = useDispatch();
+  const { data: contacts } = useGetContactsQuery();
+  const [addContact] = useAddContactMutation();
 
   const initialValues = {
-    name: '',
-    number: '',
+    contactName: '',
+    phoneNamber: '',
   };
 
   const validationSchema = Yup.object().shape({
-    name: Yup.string()
+    contactName: Yup.string()
       .matches(nameRegExp, 'Invalid name')
       .required('Name is required'),
-    number: Yup.string()
+    phoneNamber: Yup.string()
       .matches(phoneRegExp, 'Invalid phone number')
       .required('Phone number is required'),
   });
 
-  const handleSubmit = ({ name, number }, { resetForm }) => {
-    console.log(name, contacts);
-    const checkResult = checkIfContactExists(contacts, name);
+  const handleSubmit = ({ contactName, phoneNamber }, { resetForm }) => {
+    const checkResult = checkIfContactExists(contacts, contactName);
+    console.log(checkResult);
     if (checkResult) {
-      alert(`${name} is already in contacts.`);
+      alert(`${contactName} is already in contacts.`);
       return;
     }
-    dispatch(addContact({ name, number }));
+    const newContact = {
+      id: nanoid(),
+      contactName: contactName,
+      phoneNamber: phoneNamber,
+    };
+    addContact(newContact);
+
     resetForm({ values: initialValues });
   };
 
@@ -54,22 +62,24 @@ const PhoneBookForm = () => {
           <StyledFormikField
             type="text"
             id="phone_book__name"
-            name="name"
+            name="contactName"
             placeholder="Name"
+            autoComplete="off"
             title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
           />
-          <ErrorMessage name="name" component="div" />
+          <ErrorMessage name="contactName" component="div" />
           <Label htmlFor="phone_book__name">Name</Label>
         </FieldGroup>
         <FieldGroup>
           <StyledFormikField
             type="tel"
             id="phone_book__number"
-            name="number"
+            name="phoneNamber"
             placeholder="Number"
+            autoComplete="off"
             title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
           />
-          <ErrorMessage name="number" component="div" />
+          <ErrorMessage name="phoneNamber" component="div" />
 
           <Label htmlFor="phone_book__number">Number</Label>
         </FieldGroup>

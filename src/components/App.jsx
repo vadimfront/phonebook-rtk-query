@@ -9,7 +9,7 @@ const App = () => {
     <Section>
       <Container>
         <PhoneBookForm />
-        <PhoneBookFilter />
+
         <PhoneBookList />
       </Container>
     </Section>
